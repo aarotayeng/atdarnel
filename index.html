@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaro Tayeng — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Fauna+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:    #3E2522;
+    --muted:   #8C6E63;
+    --sand:    #D3A376;
+    --cream:   #FFE0B2;
+    --white:   #FFF2DF;
+    --bg:      #F5E6D0;
+    --neu-light: #FFF8EE;
+    --neu-dark:  #C9B49A;
+    --shadow-out: 8px 8px 20px var(--neu-dark), -8px -8px 20px var(--neu-light);
+    --shadow-in:  inset 6px 6px 14px var(--neu-dark), inset -6px -6px 14px var(--neu-light);
+    --shadow-sm:  4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Fauna One', serif;
+    color: var(--dark);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  #cursor {
+    width: 14px; height: 14px;
+    background: var(--muted);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.3s;
+    mix-blend-mode: multiply;
+  }
+  #cursor-ring {
+    width: 38px; height: 38px;
+    border: 2px solid var(--sand);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, border-color 0.3s;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 24px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg);
+    border-radius: 60px;
+    padding: 10px 20px;
+    box-shadow: var(--shadow-out);
+  }
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 40px;
+    transition: all 0.3s ease;
+  }
+  nav a:hover, nav a.active {
+    background: var(--bg);
+    box-shadow: var(--shadow-in);
+    color: var(--dark);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--dark);
+    margin-right: 10px;
+    padding: 8px 18px;
+    border-radius: 40px;
+    background: var(--bg);
+    box-shadow: var(--shadow-in);
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 120px 6vw; position: relative; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding-top: 160px;
+    overflow: hidden;
+  }
+
+  .hero-orbit {
+    position: absolute;
+    width: 560px; height: 560px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sand);
+    opacity: 0.25;
+    animation: spin 30s linear infinite;
+    pointer-events: none;
+  }
+  .hero-orbit:nth-child(2) {
+    width: 720px; height: 720px;
+    border-style: dashed;
+    animation-duration: 50s;
+    animation-direction: reverse;
+  }
+  .hero-orbit:nth-child(3) {
+    width: 900px; height: 900px;
+    animation-duration: 70s;
+    opacity: 0.12;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-avatar-wrap {
+    position: relative;
+    width: 200px; height: 200px;
+    margin: 0 auto 40px;
+  }
+  .hero-avatar {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--muted) 0%, var(--sand) 60%, var(--cream) 100%);
+    box-shadow: var(--shadow-out);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .hero-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 35% 30%, rgba(255,242,223,0.35) 0%, transparent 60%);
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 6px; right: 6px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    z-index: 3;
+    animation: pulse-badge 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse-badge {
+    0%, 100% { box-shadow: var(--shadow-sm); }
+    50% { box-shadow: 0 0 0 6px rgba(212,163,118,0.25), var(--shadow-sm); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Fauna One', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--dark);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .hero-name span {
+    color: var(--muted);
+  }
+  .hero-tagline {
+    font-family: 'Fauna One', serif;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin: 0 auto 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: var(--dark);
+    color: var(--white);
+    box-shadow: 6px 6px 16px rgba(62,37,34,0.4), -2px -2px 8px var(--neu-light);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 10px 14px 28px rgba(62,37,34,0.4), -2px -2px 8px var(--neu-light);
+  }
+  .btn-outline {
+    background: var(--bg);
+    color: var(--dark);
+    box-shadow: var(--shadow-out);
+  }
+  .btn-outline:hover {
+    box-shadow: var(--shadow-in);
+    color: var(--muted);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.4s forwards;
+  }
+  .hero-scroll-hint span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sand);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--sand), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* ─── STATS ROW ─── */
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 80px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.1s forwards;
+  }
+  .stat-card {
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 30px 36px;
+    box-shadow: var(--shadow-out);
+    text-align: center;
+    min-width: 140px;
+    transition: all 0.35s ease;
+  }
+  .stat-card:hover {
+    box-shadow: var(--shadow-in);
+    transform: translateY(-2px);
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  /* ─── SECTION TITLE ─── */
+  .section-label {
+    font-family: 'Fauna One', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-family: 'Fauna One', serif;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 540px;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .about-card-large {
+    background: var(--bg);
+    border-radius: 32px;
+    padding: 50px;
+    box-shadow: var(--shadow-out);
+    text-align: center;
+    transition: all 0.4s;
+  }
+  .about-card-large:hover { box-shadow: var(--shadow-in); }
+  .about-initials {
+    font-family: 'Cinzel', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--dark), var(--muted), var(--sand));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .about-role-badge {
+    display: inline-block;
+    padding: 8px 22px;
+    border-radius: 40px;
+    background: var(--bg);
+    box-shadow: var(--shadow-in);
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'Cinzel', serif;
+  }
+  .about-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .pill {
+    background: var(--bg);
+    border-radius: 50px;
+    padding: 10px 22px;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.82rem;
+    color: var(--dark);
+    transition: all 0.3s;
+    font-family: 'Fauna One', serif;
+  }
+  .pill:hover { box-shadow: var(--shadow-in); color: var(--muted); }
+
+  .about-content p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .experience-timeline {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .exp-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px 24px;
+    border-radius: 20px;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+  }
+  .exp-item:hover { box-shadow: var(--shadow-in); }
+  .exp-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--sand);
+    margin-top: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(211,163,118,0.2);
+  }
+  .exp-year {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--sand);
+    margin-bottom: 3px;
+  }
+  .exp-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .exp-company {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { background: linear-gradient(160deg, var(--bg) 0%, #EDD8BE 100%); }
+
+  .skills-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 80px;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+  }
+  .skill-card {
+    background: var(--bg);
+    border-radius: 28px;
+    padding: 40px 32px;
+    box-shadow: var(--shadow-out);
+    transition: all 0.4s;
+  }
+  .skill-card:hover { box-shadow: var(--shadow-in); transform: translateY(-4px); }
+  .skill-icon {
+    width: 60px; height: 60px;
+    border-radius: 18px;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+  .skill-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .skill-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 22px;
+  }
+  .skill-bar-track {
+    height: 8px;
+    border-radius: 20px;
+    background: var(--bg);
+    box-shadow: var(--shadow-in);
+    overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--muted), var(--sand));
+    width: 0%;
+    transition: width 1.4s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* ─── SERVICES ─── */
+  .services-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .service-card {
+    background: var(--bg);
+    border-radius: 28px;
+    padding: 36px 28px;
+    box-shadow: var(--shadow-out);
+    transition: all 0.4s;
+    cursor: default;
+  }
+  .service-card:hover { box-shadow: var(--shadow-in); }
+  .service-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .service-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--sand);
+    margin-bottom: 12px;
+  }
+  .service-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .service-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .service-big-icon {
+    width: 80px; height: 80px;
+    border-radius: 24px;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+    flex-shrink: 0;
+  }
+
+  /* ─── PORTFOLIO ─── */
+  #portfolio { background: linear-gradient(160deg, #EDD8BE 0%, var(--bg) 100%); }
+  .portfolio-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .project-card {
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow-out);
+    background: var(--bg);
+    transition: all 0.45s cubic-bezier(0.22,1,0.36,1);
+    cursor: pointer;
+  }
+  .project-card:hover { box-shadow: var(--shadow-in); transform: translateY(-6px); }
+  .project-card.large { grid-column: span 2; }
+  .project-thumb {
+    height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(62,37,34,0.12));
+  }
+  .project-body {
+    padding: 28px;
+  }
+  .project-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .project-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .project-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .project-arrow {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; justify-content: center;
+    float: right;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  .project-card:hover .project-arrow { box-shadow: var(--shadow-in); }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    margin-top: 60px;
+  }
+  .testi-card {
+    background: var(--bg);
+    border-radius: 28px;
+    padding: 40px 36px;
+    box-shadow: var(--shadow-out);
+    transition: all 0.4s;
+    position: relative;
+  }
+  .testi-card:hover { box-shadow: var(--shadow-in); }
+  .testi-quote {
+    font-size: 3rem;
+    font-family: 'Cinzel', serif;
+    color: var(--sand);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .testi-text {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 30px;
+  }
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .testi-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--muted), var(--sand));
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .testi-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .testi-role {
+    font-size: 0.76rem;
+    color: var(--sand);
+  }
+  .stars {
+    color: var(--sand);
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    letter-spacing: 3px;
+  }
+
+  /* ─── PROCESS ─── */
+  #process { background: linear-gradient(180deg, var(--bg) 0%, #EDD8BE 100%); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 70px;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 80px; right: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sand), transparent);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .step-card {
+    background: var(--bg);
+    border-radius: 28px;
+    padding: 40px 28px;
+    box-shadow: var(--shadow-out);
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+  }
+  .step-card:hover { box-shadow: var(--shadow-in); transform: translateY(-4px); }
+  .step-num {
+    width: 60px; height: 60px;
+    border-radius: 20px;
+    background: var(--bg);
+    box-shadow: var(--shadow-in);
+    margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .step-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  .step-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-info { padding-top: 20px; }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    border-radius: 20px;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: var(--dark);
+    transition: all 0.3s;
+  }
+  .contact-link:hover { box-shadow: var(--shadow-in); color: var(--muted); }
+  .contact-link-icon {
+    width: 42px; height: 42px;
+    border-radius: 14px;
+    background: var(--bg);
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .contact-link-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+  }
+  .contact-link-val {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .contact-form {
+    background: var(--bg);
+    border-radius: 32px;
+    padding: 50px 44px;
+    box-shadow: var(--shadow-out);
+  }
+  .form-group {
+    margin-bottom: 22px;
+  }
+  .form-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--bg);
+    border: none;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow-in);
+    font-family: 'Fauna One', serif;
+    font-size: 0.95rem;
+    color: var(--dark);
+    outline: none;
+    transition: box-shadow 0.3s;
+    resize: none;
+  }
+  .form-input:focus, .form-textarea:focus {
+    box-shadow: var(--shadow-out);
+  }
+  .form-textarea { height: 130px; }
+  .form-submit {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 50px;
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 6px 6px 16px rgba(62,37,34,0.4);
+    transition: all 0.35s;
+  }
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 8px 12px 24px rgba(62,37,34,0.4);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    color: var(--cream);
+    padding: 90px 6vw 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  footer::before {
+    content: 'AT';
+    position: absolute;
+    font-family: 'Cinzel', serif;
+    font-size: 22vw;
+    font-weight: 900;
+    color: rgba(255,242,223,0.03);
+    bottom: -4vw;
+    right: 4vw;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 70px;
+    padding-bottom: 70px;
+    border-bottom: 1px solid rgba(255,242,223,0.1);
+  }
+  .footer-brand-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+  }
+  .footer-brand-desc {
+    font-size: 0.88rem;
+    color: rgba(255,226,178,0.55);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 300px;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 12px;
+  }
+  .social-btn {
+    width: 42px; height: 42px;
+    border-radius: 14px;
+    background: rgba(255,242,223,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--cream);
+    transition: all 0.3s;
+    border: 1px solid rgba(255,242,223,0.08);
+  }
+  .social-btn:hover {
+    background: rgba(255,242,223,0.12);
+    transform: translateY(-3px);
+    border-color: rgba(255,226,178,0.2);
+  }
+  .footer-col-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 24px;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-links a {
+    font-size: 0.88rem;
+    color: rgba(255,226,178,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+
+  .footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .footer-contact-icon {
+    font-size: 0.95rem;
+    margin-top: 2px;
+    color: var(--sand);
+    flex-shrink: 0;
+  }
+  .footer-contact-text {
+    font-size: 0.86rem;
+    color: rgba(255,226,178,0.5);
+    line-height: 1.6;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(255,226,178,0.3);
+    font-family: 'Fauna One', serif;
+  }
+  .footer-avail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    border-radius: 40px;
+    background: rgba(255,242,223,0.06);
+    border: 1px solid rgba(255,242,223,0.08);
+  }
+  .avail-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #7EC87E;
+    animation: blink 1.8s ease-in-out infinite;
+    box-shadow: 0 0 0 3px rgba(126,200,126,0.2);
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .avail-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,226,178,0.55);
+    text-transform: uppercase;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.22s; }
+  .reveal-delay-3 { transition-delay: 0.34s; }
+  .reveal-delay-4 { transition-delay: 0.46s; }
+  .reveal-delay-5 { transition-delay: 0.58s; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── PAGE TABS ─── */
+  .page-tab {
+    display: none;
+  }
+  .page-tab.active-page {
+    display: block;
+  }
+
+  /* ─── BLOG SECTION ─── */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    margin-top: 60px;
+  }
+  .blog-card {
+    background: var(--bg);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow-out);
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+  .blog-card:hover { box-shadow: var(--shadow-in); transform: translateY(-5px); }
+  .blog-thumb {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+  .blog-body { padding: 28px; }
+  .blog-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--sand);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .blog-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .blog-excerpt {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .project-card.large { grid-column: span 2; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 8px 14px; gap: 2px; top: 14px; }
+    nav a { padding: 6px 10px; font-size: 0.65rem; }
+    .nav-logo { padding: 6px 12px; font-size: 0.75rem; }
+    section { padding: 80px 5vw; }
+    #about { grid-template-columns: 1fr; gap: 40px; }
+    .services-layout { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card.featured { grid-column: span 1; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .project-card.large { grid-column: span 1; }
+    #contact { grid-template-columns: 1fr; gap: 40px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .process-steps { grid-template-columns: 1fr; }
+    .hero-orbit { display: none; }
+  }
+
+  @media (max-width: 520px) {
+    .hero-name { font-size: 2.5rem; }
+    .footer-top { grid-template-columns: 1fr; }
+    nav { width: 90vw; justify-content: center; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Navigation -->
+<nav>
+  <span class="nav-logo">AT</span>
+  <a href="#home" class="active" onclick="showPage('home', this)">Home</a>
+  <a href="#" onclick="showPage('portfolio-page', this)">Work</a>
+  <a href="#" onclick="showPage('blog-page', this)">Blog</a>
+  <a href="#home" onclick="scrollToContact()">Contact</a>
+</nav>
+
+<!-- ═══════════════════ PAGE: HOME ═══════════════════ -->
+<div id="home-page" class="page-tab active-page">
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-orbit"></div>
+    <div class="hero-orbit"></div>
+    <div class="hero-orbit"></div>
+
+    <div class="hero-avatar-wrap">
+      <div class="hero-avatar">AT</div>
+      <div class="hero-badge">✦</div>
+    </div>
+
+    <span class="hero-eyebrow">Creative · Strategic · Purposeful</span>
+    <h1 class="hero-name">Aaro<br><span>Tayeng</span></h1>
+    <p class="hero-tagline">Frontend Developer & UI/UX Designer crafting digital experiences that are elegant, functional, and unforgettable.</p>
+
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary" onclick="showPage('portfolio-page', null)">View My Work</a>
+      <a href="#about" class="btn btn-outline">About Me</a>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Exp.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Clients</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Rating</div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="about-card-large">
+        <div class="about-initials">AT</div>
+        <div class="about-role-badge">Developer &amp; Designer</div>
+      </div>
+      <div class="about-pills">
+        <span class="pill">HTML / CSS</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">UI/UX Design</span>
+        <span class="pill">Video Editing</span>
+        <span class="pill">Figma</span>
+        <span class="pill">Responsive Design</span>
+        <span class="pill">E-Commerce</span>
+        <span class="pill">Animations</span>
+      </div>
+    </div>
+
+    <div class="about-content reveal reveal-delay-2">
+      <span class="section-label">About Me</span>
+      <h2 class="section-title">Crafting Digital Beauty With Purpose</h2>
+      <p>I'm Aaro Tayeng — a frontend developer and UI/UX designer with a passion for creating digital experiences that are as beautiful as they are functional. I combine clean code with thoughtful design to deliver products that make a real impact.</p>
+      <p>From e-commerce boutiques to brand identities, I bring a holistic approach to every project — ensuring every pixel, every interaction, and every line of code serves the bigger vision.</p>
+
+      <div class="experience-timeline">
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-year">2024 — Present</div>
+            <div class="exp-title">Senior Frontend Developer</div>
+            <div class="exp-company">Freelance / Independent Studio</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-year">2022 — 2024</div>
+            <div class="exp-title">UI/UX Designer &amp; Web Developer</div>
+            <div class="exp-company">Creative Agency, Southeast Asia</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-year">2021 — 2022</div>
+            <div class="exp-title">Junior Web Designer</div>
+            <div class="exp-company">Digital Studio — Regional Projects</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-header reveal">
+      <span class="section-label">What I Do</span>
+      <h2 class="section-title">Skills & Expertise</h2>
+      <p class="section-sub">A multidisciplinary set of capabilities built over years of delivering polished digital products.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">UI/UX Design</div>
+        <div class="skill-desc">Creating intuitive, beautiful interfaces through research-driven design thinking and visual storytelling.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="92"></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">Frontend Development</div>
+        <div class="skill-desc">Building pixel-perfect, performant websites with HTML, CSS, and JavaScript — no frameworks needed.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-3">
+        <div class="skill-icon">🛒</div>
+        <div class="skill-name">E-Commerce Design</div>
+        <div class="skill-desc">Designing conversion-focused storefronts with seamless shopping flows and brand-aligned aesthetics.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-4">
+        <div class="skill-icon">🎬</div>
+        <div class="skill-name">Video Editing</div>
+        <div class="skill-desc">Producing compelling video content for brands, social media, and digital campaigns.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="78"></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon">📱</div>
+        <div class="skill-name">Responsive Design</div>
+        <div class="skill-desc">Ensuring every project looks and works flawlessly across all devices and screen sizes.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="94"></div></div>
+      </div>
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-icon">✨</div>
+        <div class="skill-name">Motion & Animation</div>
+        <div class="skill-desc">Adding life to interfaces with purposeful micro-interactions, scroll effects, and CSS animations.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-layout">
+      <div class="reveal">
+        <span class="section-label">What I Offer</span>
+        <h2 class="section-title">Services Tailored For You</h2>
+        <p class="section-sub">Every engagement is personalized to your brand, goals, and audience — delivering results that matter.</p>
+        <br><br>
+        <a href="#contact" class="btn btn-primary" style="display:inline-block">Get a Quote</a>
+      </div>
+      <div class="services-grid">
+        <div class="service-card featured reveal reveal-delay-1">
+          <div class="service-big-icon">🌐</div>
+          <div>
+            <div class="service-num">01</div>
+            <div class="service-title">Full-Stack Frontend Development</div>
+            <div class="service-desc">Complete websites from concept to launch — custom, hand-coded, and built to impress. E-commerce, portfolios, landing pages and more.</div>
+          </div>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-num">02</div>
+          <div class="service-title">Brand Identity & UI Design</div>
+          <div class="service-desc">Visual systems, color palettes, typography, and design guidelines that make your brand unforgettable.</div>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-num">03</div>
+          <div class="service-title">Motion & Video Content</div>
+          <div class="service-desc">Short-form video edits, reel production, and animated brand assets for social media and web.</div>
+        </div>
+        <div class="service-card reveal reveal-delay-4">
+          <div class="service-num">04</div>
+          <div class="service-title">E-Commerce Storefronts</div>
+          <div class="service-desc">WhatsApp-integrated or platform-ready shops designed to convert visitors into loyal customers.</div>
+        </div>
+        <div class="service-card reveal reveal-delay-5">
+          <div class="service-num">05</div>
+          <div class="service-title">Consultation & Revamp</div>
+          <div class="service-desc">Strategic UX audits and redesigns for existing sites — elevating performance and experience.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+      <span class="section-label">How I Work</span>
+      <h2 class="section-title">My Creative Process</h2>
+      <p class="section-sub">A structured approach that turns ideas into polished, purposeful digital products — every time.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <div class="step-title">Discover</div>
+        <div class="step-desc">Deep-dive into your brand, audience, goals, and competition to build a solid strategic foundation.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-title">Design</div>
+        <div class="step-desc">Wireframes, moodboards, and high-fidelity mockups — crafting the visual language of your product.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <div class="step-title">Build</div>
+        <div class="step-desc">Clean, semantic, performance-first code. Every animation, every interaction — hand-crafted with care.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <div class="step-title">Launch</div>
+        <div class="step-desc">Testing, refinement, deployment, and post-launch support to ensure everything is perfect.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" style="background: linear-gradient(160deg, #EDD8BE 0%, var(--bg) 100%);">
+    <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+      <span class="section-label">Client Love</span>
+      <h2 class="section-title">What People Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">Aaro delivered a stunning website for our fashion boutique that perfectly captured our brand's elegance. The attention to detail and smooth animations blew us away.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div>
+            <div class="testi-name">Sophea Roth</div>
+            <div class="testi-role">Founder, Clothing by Roth</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">Our streetwear store needed a bold, edgy look and Aaro nailed it. Responsive, fast, and exactly the vibe we were going for. Highly recommend.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AK</div>
+          <div>
+            <div class="testi-name">Arjun Kapoor</div>
+            <div class="testi-role">Owner, Swordrobe Mumbai</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">Working with Aaro was seamless from start to finish. The portfolio site they built for me is professional, modern, and I get compliments on it constantly.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">NT</div>
+          <div>
+            <div class="testi-name">Nangku Tayeng</div>
+            <div class="testi-role">Freelance Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-info reveal">
+      <span class="section-label">Let's Connect</span>
+      <h2 class="section-title">Ready to Start Something Great?</h2>
+      <p class="section-sub">Whether you have a project in mind or just want to say hello — I'd love to hear from you.</p>
+
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:aaro@example.com">
+          <div class="contact-link-icon">✉️</div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-val">aaro.tayeng@email.com</div>
+          </div>
+        </a>
+        <a class="contact-link" href="#">
+          <div class="contact-link-icon">💼</div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-val">linkedin.com/in/aarotayeng</div>
+          </div>
+        </a>
+        <a class="contact-link" href="#">
+          <div class="contact-link-icon">🐙</div>
+          <div>
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-val">github.com/aarotayeng</div>
+          </div>
+        </a>
+        <a class="contact-link" href="#">
+          <div class="contact-link-icon">📸</div>
+          <div>
+            <div class="contact-link-label">Instagram</div>
+            <div class="contact-link-val">@aaro.tayeng</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-2">
+      <span class="section-label">Send a Message</span>
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="Full name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Project Type</label>
+        <input type="text" class="form-input" placeholder="e.g. E-commerce, Portfolio, Brand Identity">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button class="form-submit">Send Message →</button>
+    </div>
+  </section>
+
+</div><!-- end home-page -->
+
+<!-- ═══════════════════ PAGE: PORTFOLIO ═══════════════════ -->
+<div id="portfolio-page" class="page-tab">
+  <section id="portfolio" style="padding-top:160px;">
+    <div class="portfolio-header">
+      <div>
+        <span class="section-label">Selected Work</span>
+        <h2 class="section-title">My Projects</h2>
+      </div>
+      <p class="section-sub" style="max-width:320px;">A curated showcase of digital experiences crafted with intention and precision.</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="project-card large reveal">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #3E2522 0%, #8C6E63 100%);">🌸</div>
+        <div class="project-body">
+          <span class="project-tag">E-Commerce · Fashion · Cambodia</span>
+          <div class="project-title">Clothing by Roth — Boutique Store</div>
+          <p class="project-desc">Full multi-page e-commerce site for a Cambodian fashion boutique. Features product gallery, cart drawer, WhatsApp checkout flow, and a soft feminine aesthetic in peach & blush tones.</p>
+          <div class="project-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #1a1a1a 0%, #444 100%);">⚔️</div>
+        <div class="project-body">
+          <span class="project-tag">Streetwear · Mumbai</span>
+          <div class="project-title">Swordrobe</div>
+          <p class="project-desc">Bold dark-themed streetwear store with immersive typography and an edgy, raw aesthetic. WhatsApp integrated.</p>
+          <div class="project-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #1C2B4A 0%, #2D5FA8 100%);">🏎️</div>
+        <div class="project-body">
+          <span class="project-tag">Merch · Formula 1</span>
+          <div class="project-title">F1 Merchandise Store</div>
+          <p class="project-desc">Racing-inspired merch store with speed-first UI, animated grid-lines, and a dynamic product layout.</p>
+          <div class="project-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #8C6E63 0%, #D3A376 100%);">📂</div>
+        <div class="project-body">
+          <span class="project-tag">Portfolio · Developer</span>
+          <div class="project-title">Nangku Tayeng — Dev Portfolio</div>
+          <p class="project-desc">Clean, professional portfolio site for a freelance developer with project showcases and contact flows.</p>
+          <div class="project-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #2A1A0E 0%, #7C4A2D 100%);">👕</div>
+        <div class="project-body">
+          <span class="project-tag">Clothing · Meerut</span>
+          <div class="project-title">MARK Clothing Store</div>
+          <p class="project-desc">Versatile clothing store UI for an emerging Indian brand. Mobile-first with smooth category filtering.</p>
+          <div class="project-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="project-card large reveal reveal-delay-3">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #4A2040 0%, #9B5FA5 100%);">✨</div>
+        <div class="project-body">
+          <span class="project-tag">Brand Identity · UI Design</span>
+          <div class="project-title">Multi-Brand Identity System</div>
+          <p class="project-desc">End-to-end brand identity design for multiple fashion and retail brands across Southeast Asia — including color systems, typography, and digital guidelines.</p>
+          <div class="project-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end portfolio-page -->
+
+<!-- ═══════════════════ PAGE: BLOG ═══════════════════ -->
+<div id="blog-page" class="page-tab">
+  <section style="padding-top:160px;">
+    <div class="reveal" style="max-width:600px;">
+      <span class="section-label">Thoughts & Insights</span>
+      <h2 class="section-title">The Blog</h2>
+      <p class="section-sub">Reflections on design, development, creativity, and the craft of building beautiful digital things.</p>
+    </div>
+
+    <div class="blog-grid">
+      <div class="blog-card reveal reveal-delay-1">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, var(--muted), var(--sand));">🎨</div>
+        <div class="blog-body">
+          <span class="blog-date">April 2025 · Design</span>
+          <div class="blog-title">Neumorphism in 2025: Still Relevant or Niche Trend?</div>
+          <p class="blog-excerpt">Exploring where soft UI has evolved, what it does well, and when it's the right choice for your next project.</p>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-2">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, var(--dark), var(--muted));">💡</div>
+        <div class="blog-body">
+          <span class="blog-date">March 2025 · Development</span>
+          <div class="blog-title">Why I Still Build Websites Without Frameworks</div>
+          <p class="blog-excerpt">A case for pure HTML, CSS, and JavaScript — when vanilla is a strength, not a limitation.</p>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-3">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, var(--sand), var(--cream));">🛒</div>
+        <div class="blog-body">
+          <span class="blog-date">Feb 2025 · E-Commerce</span>
+          <div class="blog-title">WhatsApp Commerce: The Future of Small Brand Sales</div>
+          <p class="blog-excerpt">How integrating WhatsApp ordering flows dramatically boosts conversions for fashion boutiques in Southeast Asia.</p>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-1">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #8C6E63, #FFE0B2);">📱</div>
+        <div class="blog-body">
+          <span class="blog-date">Jan 2025 · Design</span>
+          <div class="blog-title">Mobile-First Is Not Optional Anymore</div>
+          <p class="blog-excerpt">The non-negotiable case for designing and developing with mobile as the primary canvas — not an afterthought.</p>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-2">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #3E2522, #8C6E63);">✨</div>
+        <div class="blog-body">
+          <span class="blog-date">Dec 2024 · Career</span>
+          <div class="blog-title">From Side Projects to Clients: My Freelance Journey</div>
+          <p class="blog-excerpt">How I turned passion projects into a sustainable freelance practice — and what I'd do differently from day one.</p>
+        </div>
+      </div>
+      <div class="blog-card reveal reveal-delay-3">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #D3A376, #FFF2DF);">🎬</div>
+        <div class="blog-body">
+          <span class="blog-date">Nov 2024 · Creative</span>
+          <div class="blog-title">Combining Video Editing & Web Design for Brand Storytelling</div>
+          <p class="blog-excerpt">When motion and interface design unite, brands come alive. Here's how I approach cross-disciplinary creative work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end blog-page -->
+
+<!-- ═══════════════════ FOOTER (always visible) ═══════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Aaro Tayeng</div>
+      <p class="footer-brand-desc">Frontend Developer & UI/UX Designer creating digital experiences with purpose, precision, and heart. Based in Southeast Asia, working globally.</p>
+      <div class="footer-socials">
+        <a class="social-btn" href="#" title="LinkedIn">in</a>
+        <a class="social-btn" href="#" title="GitHub">GH</a>
+        <a class="social-btn" href="#" title="Instagram">IG</a>
+        <a class="social-btn" href="#" title="Dribbble">Dr</a>
+        <a class="social-btn" href="#" title="Twitter/X">𝕏</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="#home" onclick="showPage('home',null)">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#" onclick="showPage('portfolio-page',null)">Portfolio</a></li>
+        <li><a href="#" onclick="showPage('blog-page',null)">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Frontend Development</a></li>
+        <li><a href="#">UI/UX Design</a></li>
+        <li><a href="#">E-Commerce Stores</a></li>
+        <li><a href="#">Brand Identity</a></li>
+        <li><a href="#">Video Editing</a></li>
+        <li><a href="#">Site Revamp</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">✉</span>
+        <span class="footer-contact-text">aaro.tayeng@email.com</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">📍</span>
+        <span class="footer-contact-text">Southeast Asia<br>Working Globally</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-icon">🕐</span>
+        <span class="footer-contact-text">Mon – Sat<br>9:00 AM – 7:00 PM (ICT)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Aaro Tayeng. All rights reserved. Designed & Built with ♥</span>
+    <div class="footer-avail">
+      <div class="avail-dot"></div>
+      <span class="avail-text">Available for new projects</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── Custom Cursor ───
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 7}px, ${my - 7}px)`;
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 19}px, ${ry - 19}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a, button, .skill-card, .project-card, .testi-card, .service-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(1.6)'; ring.style.borderColor = 'var(--dark)'; });
+    el.addEventListener('mouseleave', () => { ring.style.borderColor = 'var(--sand)'; });
+  });
+
+  // ─── Page Navigation ───
+  function showPage(pageId, navEl) {
+    document.querySelectorAll('.page-tab').forEach(p => p.classList.remove('active-page'));
+    document.getElementById(pageId + (pageId.endsWith('-page') ? '' : '-page')).classList.add('active-page');
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    initReveal();
+    initSkillBars();
+  }
+
+  function scrollToContact() {
+    showPage('home', null);
+    setTimeout(() => {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  }
+
+  // ─── Scroll Reveal ───
+  function initReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.remove('revealed');
+      observer.observe(el);
+    });
+  }
+
+  // ─── Skill Bars ───
+  function initSkillBars() {
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const fill = e.target.querySelector('.skill-bar-fill');
+          if (fill) fill.style.width = fill.dataset.width + '%';
+          barObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skill-card').forEach(c => barObserver.observe(c));
+  }
+
+  // ─── Active Nav on Scroll ───
+  const sections = ['home', 'about', 'skills', 'services', 'process', 'testimonials', 'contact'];
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 200) current = id;
+    });
+  });
+
+  // ─── Counter Animation ───
+  function animateCounters() {
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const target = parseInt(el.textContent);
+      if (isNaN(target)) return;
+      let count = 0;
+      const step = target / 40;
+      const timer = setInterval(() => {
+        count += step;
+        if (count >= target) { el.textContent = target + (el.textContent.includes('+') ? '+' : ''); clearInterval(timer); }
+        else el.textContent = Math.floor(count) + (el.textContent.includes('+') ? '+' : '');
+      }, 40);
+    });
+  }
+
+  // ─── Form ───
+  document.querySelector('.form-submit').addEventListener('click', function() {
+    this.textContent = '✓ Sent! I\'ll be in touch soon.';
+    this.style.background = 'var(--muted)';
+    setTimeout(() => {
+      this.textContent = 'Send Message →';
+      this.style.background = 'var(--dark)';
+    }, 3500);
+  });
+
+  // ─── Init ───
+  document.addEventListener('DOMContentLoaded', () => {
+    initReveal();
+    initSkillBars();
+    setTimeout(animateCounters, 1200);
+  });
+</script>
+</body>
+</html>
