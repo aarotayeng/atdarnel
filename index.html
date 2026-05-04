@@ -26,16 +26,24 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);font-family:'Fauna One',serif;color:var(--text-primary);overflow-x:hidden;cursor:none;}
+body{background:var(--bg);font-family:'Fauna One',serif;color:var(--text-primary);overflow-x:hidden;}
 
-/* CURSOR */
-#cur{width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform .12s ease;}
-#cur-ring{width:34px;height:34px;border:1.5px solid var(--accent-sand);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:transform .32s ease,border-color .3s;}
+/* Remove all blue focus outlines, selection flashes, tap highlights */
+*{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;}
+*:focus{outline:none;}
+*:focus-visible{outline:none;}
+::selection{background:transparent;}
+::-moz-selection{background:transparent;}
+a,button,nav a,.proj,.b-card,.sk-card,.svc-card,.p-card,.t-card,.stat,.tag,.t-item,.btn{
+  -webkit-user-select:none;user-select:none;
+  outline:none!important;
+}
+a:focus,button:focus,nav a:focus{outline:none!important;box-shadow:none!important;}
 
 /* NAV */
 nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;align-items:center;gap:4px;background:var(--bg);border-radius:var(--r-pill);padding:8px 18px;box-shadow:var(--shadow-out);white-space:nowrap;}
 .nav-logo{font-family:'Cinzel',serif;font-weight:700;font-size:.82rem;letter-spacing:.2em;color:var(--text-primary);padding:8px 16px;border-radius:var(--r-pill);box-shadow:var(--shadow-in);margin-right:8px;}
-nav a{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;padding:8px 16px;border-radius:var(--r-pill);transition:all .3s;cursor:none;}
+nav a{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;padding:8px 16px;border-radius:var(--r-pill);transition:all .3s;}
 nav a:hover,nav a.active{box-shadow:var(--shadow-in);color:var(--text-primary);}
 
 /* PAGES */
@@ -48,7 +56,7 @@ section{padding:110px 7vw;}
 .s-sub{font-size:1rem;color:var(--text-muted);line-height:1.85;max-width:500px;}
 
 /* BUTTONS */
-.btn{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:15px 34px;border-radius:var(--r-pill);display:inline-block;transition:all .35s;cursor:none;border:none;outline:none;}
+.btn{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:15px 34px;border-radius:var(--r-pill);display:inline-block;transition:all .35s;border:none;outline:none;}
 .btn-solid{background:var(--accent);color:var(--white);box-shadow:5px 5px 16px rgba(140,110,99,.35),-2px -2px 8px var(--neu-light);}
 .btn-solid:hover{background:var(--accent-deep);transform:translateY(-3px);box-shadow:8px 12px 24px rgba(140,110,99,.35);}
 .btn-ghost{background:var(--bg);color:var(--text-primary);box-shadow:var(--shadow-out);}
@@ -173,31 +181,68 @@ section{padding:110px 7vw;}
 .f-input::placeholder,.f-area::placeholder{color:var(--text-light);}
 .f-input:focus,.f-area:focus{box-shadow:var(--shadow-out);}
 .f-area{height:124px;}
-.f-btn{width:100%;padding:17px;border:none;border-radius:var(--r-pill);background:var(--accent);color:var(--white);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;transition:all .35s;box-shadow:5px 5px 16px rgba(140,110,99,.3);}
-.f-btn:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:8px 12px 22px rgba(140,110,99,.3);}
+.f-btn{width:100%;padding:17px;border:none;border-radius:var(--r-pill);background:var(--accent);color:var(--white);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .35s;box-shadow:5px 5px 16px rgba(140,110,99,.3);}
+.f-btn:hover:not(:disabled){background:var(--accent-deep);transform:translateY(-2px);box-shadow:8px 12px 22px rgba(140,110,99,.3);}
+.f-btn:disabled{opacity:.7;cursor:not-allowed;}
+.form-msg{margin-top:14px;padding:14px 18px;border-radius:var(--r-md);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.08em;text-align:center;display:none;}
+.form-msg.success{background:rgba(126,200,126,.12);color:#3a7a3a;box-shadow:var(--shadow-sm);}
+.form-msg.error{background:rgba(200,100,80,.12);color:#8a3030;box-shadow:var(--shadow-sm);}
 
-/* PORTFOLIO PAGE */
+/* ═══ PROJECT CARDS ═══ */
 .port-wrap{padding:140px 7vw 100px;}
 .port-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:56px;flex-wrap:wrap;gap:20px;}
 .port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
-.proj{background:var(--bg);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-out);transition:all .45s cubic-bezier(.22,1,.36,1);cursor:none;}
+
+.proj{background:var(--bg);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-out);transition:all .45s cubic-bezier(.22,1,.36,1);cursor:pointer;}
 .proj:hover{box-shadow:var(--shadow-in);transform:translateY(-6px);}
 .proj.span2{grid-column:span 2;}
-.proj-thumb{height:210px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;position:relative;overflow:hidden;}
-.proj-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(240,235,227,.25));}
+
+/* Project thumbnail with real image */
+.proj-thumb{height:210px;position:relative;overflow:hidden;}
+.proj-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.proj:hover .proj-thumb img{transform:scale(1.05);}
+.proj-thumb-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.2rem;}
+.proj-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(240,235,227,.35));}
+
+/* Project icon badge */
+.proj-icon-badge{position:absolute;top:14px;left:14px;width:44px;height:44px;border-radius:var(--r-sm);background:rgba(240,235,227,.92);backdrop-filter:blur(6px);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+
 .proj-body{padding:26px;}
 .proj-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:7px;display:block;}
 .proj-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--text-primary);margin-bottom:7px;}
 .proj-desc{font-size:.83rem;color:var(--text-muted);line-height:1.65;}
-.proj-arr{width:34px;height:34px;border-radius:50%;background:var(--bg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;float:right;margin-top:14px;font-size:.85rem;transition:all .3s;}
+.proj-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+.proj-link-badge{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:5px;}
+.proj-arr{width:34px;height:34px;border-radius:50%;background:var(--bg);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .3s;flex-shrink:0;}
 .proj:hover .proj-arr{box-shadow:var(--shadow-in);}
 
-/* BLOG PAGE */
+/* ═══ PROJECT POPUP ═══ */
+.popup-overlay{position:fixed;inset:0;background:rgba(46,36,32,.55);backdrop-filter:blur(6px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.popup-overlay.open{opacity:1;pointer-events:all;}
+.popup-box{background:var(--bg);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);max-width:740px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(30px) scale(.97);transition:transform .35s cubic-bezier(.22,1,.36,1);}
+.popup-overlay.open .popup-box{transform:translateY(0) scale(1);}
+.popup-img-wrap{width:100%;height:320px;overflow:hidden;border-radius:var(--r-xl) var(--r-xl) 0 0;position:relative;background:var(--neu-dark);}
+.popup-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.popup-img-wrap .popup-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(240,235,227,.5));}
+.popup-body{padding:36px 40px 40px;}
+.popup-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:10px;display:block;}
+.popup-title{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;}
+.popup-desc{font-size:.93rem;color:var(--text-muted);line-height:1.85;margin-bottom:24px;}
+.popup-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.popup-close{position:absolute;top:18px;right:18px;width:42px;height:42px;border-radius:50%;background:var(--bg);box-shadow:var(--shadow-sm);border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .3s;z-index:10;}
+.popup-close:hover{box-shadow:var(--shadow-in);color:var(--text-primary);}
+.popup-img-wrap{position:relative;}
+
+/* ═══ BLOG CARDS ═══ */
 .blog-wrap{padding:140px 7vw 100px;}
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:56px;}
-.b-card{background:var(--bg);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-out);transition:all .4s;cursor:none;}
+.b-card{background:var(--bg);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-out);transition:all .4s;}
 .b-card:hover{box-shadow:var(--shadow-in);transform:translateY(-5px);}
-.b-thumb{height:170px;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.b-thumb{height:190px;position:relative;overflow:hidden;}
+.b-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.b-card:hover .b-thumb img{transform:scale(1.06);}
+.b-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(240,235,227,.25));}
+.b-icon-badge{position:absolute;top:12px;left:12px;width:38px;height:38px;border-radius:var(--r-sm);background:rgba(240,235,227,.9);backdrop-filter:blur(4px);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
 .b-body{padding:26px;}
 .b-date{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-warm);margin-bottom:9px;display:block;}
 .b-title{font-family:'Cinzel',serif;font-size:.96rem;font-weight:600;color:var(--text-primary);margin-bottom:9px;line-height:1.4;}
@@ -254,18 +299,18 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
   .f-top{grid-template-columns:1fr 1fr;gap:32px;}
   .ring,.blob{display:none;}
   .port-wrap,.blog-wrap{padding:120px 5vw 80px;}
+  .popup-body{padding:24px 22px 28px;}
+  .popup-img-wrap{height:200px;}
 }
 @media(max-width:480px){
   .hero-name{font-size:2.8rem;}
   .f-top{grid-template-columns:1fr;}
   nav{width:92vw;justify-content:center;flex-wrap:wrap;}
+  .popup-box{max-height:95vh;}
 }
 </style>
 </head>
 <body>
-
-<div id="cur"></div>
-<div id="cur-ring"></div>
 
 <nav>
   <span class="nav-logo">AT</span>
@@ -274,6 +319,26 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
   <a href="#" onclick="go('blog-page',this)">Blog</a>
   <a href="#" onclick="goContact(this)">Contact</a>
 </nav>
+
+<!-- ═══ PROJECT POPUP ═══ -->
+<div class="popup-overlay" id="proj-popup" role="dialog" aria-modal="true">
+  <div class="popup-box">
+    <div class="popup-img-wrap">
+      <img id="popup-img" src="" alt="" loading="lazy">
+      <div class="popup-img-overlay"></div>
+      <button class="popup-close" id="popup-close-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="popup-body">
+      <span class="popup-tag" id="popup-tag"></span>
+      <div class="popup-title" id="popup-title"></div>
+      <p class="popup-desc" id="popup-desc"></p>
+      <div class="popup-actions">
+        <a id="popup-link" href="#" target="_blank" rel="noopener" class="btn btn-solid">View Live Site →</a>
+        <button class="btn btn-ghost" onclick="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ PAGE: HOME ═══ -->
 <div id="home-page" class="page on">
@@ -320,6 +385,7 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
         <span class="tag">UI/UX Design</span><span class="tag">Video Editing</span>
         <span class="tag">Figma</span><span class="tag">E-Commerce</span>
         <span class="tag">Animations</span><span class="tag">Responsive</span>
+        <span class="tag">Reactjs</span><span class="tag">Nodejs</span>
       </div>
     </div>
     <div class="about-text rv d2">
@@ -414,19 +480,34 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
       <h2 class="s-title">Ready to Start Something Great?</h2>
       <p class="s-sub">Whether you have a project in mind or just want to say hello — I'd love to hear from you.</p>
       <div class="c-links">
-        <a class="c-link" href="mailto:aaro.tayeng@email.com"><div class="c-icon">✉️</div><div><div class="c-lbl">Email</div><div class="c-val">aaro.tayeng@email.com</div></div></a>
-        <a class="c-link" href="https://linkedin.com/in/aarotayeng" target="_blank"><div class="c-icon">💼</div><div><div class="c-lbl">LinkedIn</div><div class="c-val">linkedin.com/in/aarotayeng</div></div></a>
-        <a class="c-link" href="https://github.com/aarotayeng" target="_blank"><div class="c-icon">🐙</div><div><div class="c-lbl">GitHub</div><div class="c-val">github.com/aarotayeng</div></div></a>
-        <a class="c-link" href="https://instagram.com/aaro.tayeng" target="_blank"><div class="c-icon">📸</div><div><div class="c-lbl">Instagram</div><div class="c-val">@aaro.tayeng</div></div></a>
+        <a class="c-link" href="mailto:namey0736@gmail.com">
+          <div class="c-icon">✉️</div>
+          <div><div class="c-lbl">Email</div><div class="c-val">namey0736@gmail.com</div></div>
+        </a>
+        <a class="c-link" href="#" onclick="return false;" title="LinkedIn currently unavailable" style="opacity:.65;">
+          <div class="c-icon">💼</div>
+          <div><div class="c-lbl">LinkedIn</div><div class="c-val">Profile temporarily unavailable — coming soon</div></div>
+        </a>
+        <a class="c-link" href="https://github.com/aarotayeng" target="_blank" rel="noopener">
+          <div class="c-icon">🐙</div>
+          <div><div class="c-lbl">GitHub</div><div class="c-val">github.com/aarotayeng</div></div>
+        </a>
+        <a class="c-link" href="https://instagram.com/atdarnel" target="_blank" rel="noopener">
+          <div class="c-icon">📸</div>
+          <div><div class="c-lbl">Instagram</div><div class="c-val">@atdarnel</div></div>
+        </a>
       </div>
     </div>
     <div class="c-form rv d2">
       <span class="s-label">Send a Message</span>
-      <div class="f-group"><label class="f-label">Your Name</label><input type="text" class="f-input" placeholder="Full name"></div>
-      <div class="f-group"><label class="f-label">Email Address</label><input type="email" class="f-input" placeholder="your@email.com"></div>
-      <div class="f-group"><label class="f-label">Project Type</label><input type="text" class="f-input" placeholder="e.g. E-commerce, Portfolio…"></div>
-      <div class="f-group"><label class="f-label">Message</label><textarea class="f-area" placeholder="Tell me about your project…"></textarea></div>
-      <button class="f-btn" id="send-btn">Send Message →</button>
+      <form id="contact-form" novalidate>
+        <div class="f-group"><label class="f-label">Your Name</label><input type="text" name="name" class="f-input" placeholder="Full name" required></div>
+        <div class="f-group"><label class="f-label">Email Address</label><input type="email" name="email" class="f-input" placeholder="your@email.com" required></div>
+        <div class="f-group"><label class="f-label">Project Type</label><input type="text" name="project" class="f-input" placeholder="e.g. E-commerce, Portfolio…"></div>
+        <div class="f-group"><label class="f-label">Message</label><textarea name="message" class="f-area" placeholder="Tell me about your project…" required></textarea></div>
+        <button type="submit" class="f-btn" id="send-btn">Send Message →</button>
+      </form>
+      <div class="form-msg" id="form-msg"></div>
     </div>
   </section>
 </div>
@@ -438,13 +519,117 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
       <div><span class="s-label">Selected Work</span><h2 class="s-title">My Projects</h2></div>
       <p class="s-sub" style="max-width:300px;">Curated digital experiences crafted with intention and precision.</p>
     </div>
+
     <div class="port-grid">
-      <div class="proj span2 rv"><div class="proj-thumb" style="background:linear-gradient(135deg,#E8D5C4,#C9A98A);">🌸</div><div class="proj-body"><span class="proj-tag">E-Commerce · Fashion · Cambodia</span><div class="proj-title">Clothing by Roth — Boutique Store</div><p class="proj-desc">Full multi-page e-commerce site for a Cambodian fashion boutique. Features product gallery, cart drawer, WhatsApp checkout flow, and a soft feminine aesthetic.</p><div class="proj-arr">→</div></div></div>
-      <div class="proj rv d1"><div class="proj-thumb" style="background:linear-gradient(135deg,#D9CBB8,#B89A82);">⚔️</div><div class="proj-body"><span class="proj-tag">Streetwear · Mumbai</span><div class="proj-title">Swordrobe</div><p class="proj-desc">Bold streetwear store with immersive typography and an edgy, raw aesthetic. WhatsApp integrated ordering flow.</p><div class="proj-arr">→</div></div></div>
-      <div class="proj rv d2"><div class="proj-thumb" style="background:linear-gradient(135deg,#CDD6E8,#8BA3C9);">🏎️</div><div class="proj-body"><span class="proj-tag">Merch · Formula 1</span><div class="proj-title">F1 Merchandise Store</div><p class="proj-desc">Racing-inspired merch store with speed-first UI, animated grid-lines, and dynamic product layout.</p><div class="proj-arr">→</div></div></div>
-      <div class="proj rv d1"><div class="proj-thumb" style="background:linear-gradient(135deg,#E0D4C8,#C4A890);">📂</div><div class="proj-body"><span class="proj-tag">Portfolio · Developer</span><div class="proj-title">Nangku Tayeng — Dev Portfolio</div><p class="proj-desc">Clean professional portfolio for a freelance developer with project showcases and contact flows.</p><div class="proj-arr">→</div></div></div>
-      <div class="proj rv d2"><div class="proj-thumb" style="background:linear-gradient(135deg,#D4C9BE,#A8907E);">👕</div><div class="proj-body"><span class="proj-tag">Clothing · Meerut</span><div class="proj-title">MARK Clothing Store</div><p class="proj-desc">Versatile clothing store UI for an emerging Indian brand. Mobile-first with smooth category filtering.</p><div class="proj-arr">→</div></div></div>
-      <div class="proj span2 rv d3"><div class="proj-thumb" style="background:linear-gradient(135deg,#DDD0E8,#B89FC8);">✨</div><div class="proj-body"><span class="proj-tag">Brand Identity · UI Design</span><div class="proj-title">Multi-Brand Identity System</div><p class="proj-desc">End-to-end brand identity for multiple fashion and retail brands across Southeast Asia — color systems, typography, and digital guidelines.</p><div class="proj-arr">→</div></div></div>
+
+      <!-- 1. Clothing by Roth — span 2, no external link, stock image -->
+      <div class="proj span2 rv" onclick="openPopup('roth')">
+        <div class="proj-thumb">
+          <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=80&auto=format&fit=crop" alt="Clothing by Roth">
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-icon-badge">🌸</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-tag">E-Commerce · Fashion · Cambodia</span>
+          <div class="proj-title">Clothing by Roth — Boutique Store</div>
+          <p class="proj-desc">Full multi-page e-commerce site for a Cambodian fashion boutique. Features product gallery, cart drawer, WhatsApp checkout flow, and a soft feminine aesthetic.</p>
+          <div class="proj-footer">
+            <span class="proj-link-badge">📂 View Case Study</span>
+            <div class="proj-arr">→</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Swordrobe — has link -->
+      <div class="proj rv d1" onclick="openPopup('swordrobe')">
+        <div class="proj-thumb">
+          <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=700&q=80&auto=format&fit=crop" alt="Swordrobe Streetwear">
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-icon-badge">⚔️</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-tag">Streetwear · Mumbai</span>
+          <div class="proj-title">Swordrobe</div>
+          <p class="proj-desc">Bold streetwear store with immersive typography and an edgy, raw aesthetic. WhatsApp integrated ordering flow.</p>
+          <div class="proj-footer">
+            <span class="proj-link-badge">🔗 Live Site</span>
+            <div class="proj-arr">→</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. F1 Merch — has link -->
+      <div class="proj rv d2" onclick="openPopup('f1')">
+        <div class="proj-thumb">
+          <img src="https://images.pexels.com/photos/33438079/pexels-photo-33438079/free-photo-of-dynamic-formula-1-race-car-on-track.jpeg?auto=compress&cs=tinysrgb&w=700&h=400&fit=crop" alt="F1 Merchandise Store">
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-icon-badge">🏎️</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-tag">Merch · Formula 1</span>
+          <div class="proj-title">F1 Merchandise Store</div>
+          <p class="proj-desc">Racing-inspired merch store with speed-first UI, animated grid-lines, and dynamic product layout.</p>
+          <div class="proj-footer">
+            <span class="proj-link-badge">🔗 Live Site</span>
+            <div class="proj-arr">→</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Nangku Tayeng — has link -->
+      <div class="proj rv d1" onclick="openPopup('nangku')">
+        <div class="proj-thumb">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=80&auto=format&fit=crop" alt="Nangku Tayeng Dev Portfolio">
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-icon-badge">📂</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-tag">Portfolio · Developer</span>
+          <div class="proj-title">Nangku Tayeng — Dev Portfolio</div>
+          <p class="proj-desc">Clean professional portfolio for a freelance developer with project showcases and contact flows.</p>
+          <div class="proj-footer">
+            <span class="proj-link-badge">🔗 Live Site</span>
+            <div class="proj-arr">→</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. MARK Clothing — has link -->
+      <div class="proj rv d2" onclick="openPopup('mark')">
+        <div class="proj-thumb">
+          <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=700&q=80&auto=format&fit=crop" alt="MARK Clothing Store">
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-icon-badge">👕</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-tag">Clothing · Meerut</span>
+          <div class="proj-title">MARK Clothing Store</div>
+          <p class="proj-desc">Versatile clothing store UI for an emerging Indian brand. Mobile-first with smooth category filtering.</p>
+          <div class="proj-footer">
+            <span class="proj-link-badge">🔗 Live Site</span>
+            <div class="proj-arr">→</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Multi-Brand Identity — span 2, no external link, stock image, placed last -->
+      <div class="proj span2 rv d3" onclick="openPopup('brand')">
+        <div class="proj-thumb">
+          <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=900&q=80&auto=format&fit=crop" alt="Multi-Brand Identity System">
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-icon-badge">✨</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-tag">Brand Identity · UI Design</span>
+          <div class="proj-title">Multi-Brand Identity System</div>
+          <p class="proj-desc">End-to-end brand identity for multiple fashion and retail brands across Southeast Asia — color systems, typography, and digital guidelines.</p>
+          <div class="proj-footer">
+            <span class="proj-link-badge">📂 View Case Study</span>
+            <div class="proj-arr">→</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -458,12 +643,85 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
       <p class="s-sub">Reflections on design, development, and the craft of building beautiful digital things.</p>
     </div>
     <div class="blog-grid">
-      <div class="b-card rv d1"><div class="b-thumb" style="background:linear-gradient(135deg,#EDE0D4,#D4B89A);">🎨</div><div class="b-body"><span class="b-date">April 2025 · Design</span><div class="b-title">Neumorphism in 2025: Still Relevant or Niche Trend?</div><p class="b-excerpt">Exploring where soft UI has evolved, what it does well, and when it's the right choice for your next project.</p></div></div>
-      <div class="b-card rv d2"><div class="b-thumb" style="background:linear-gradient(135deg,#D4CABC,#B09C8C);">💡</div><div class="b-body"><span class="b-date">March 2025 · Development</span><div class="b-title">Why I Still Build Websites Without Frameworks</div><p class="b-excerpt">A case for pure HTML, CSS, and JavaScript — when vanilla is a strength, not a limitation.</p></div></div>
-      <div class="b-card rv d3"><div class="b-thumb" style="background:linear-gradient(135deg,#E4D8C8,#CABA9C);">🛒</div><div class="b-body"><span class="b-date">Feb 2025 · E-Commerce</span><div class="b-title">WhatsApp Commerce: The Future of Small Brand Sales</div><p class="b-excerpt">How integrating WhatsApp ordering flows dramatically boosts conversions for fashion boutiques in Southeast Asia.</p></div></div>
-      <div class="b-card rv d1"><div class="b-thumb" style="background:linear-gradient(135deg,#D8E0E4,#A8BAC2);">📱</div><div class="b-body"><span class="b-date">Jan 2025 · Design</span><div class="b-title">Mobile-First Is Not Optional Anymore</div><p class="b-excerpt">The non-negotiable case for designing and developing with mobile as the primary canvas — not an afterthought.</p></div></div>
-      <div class="b-card rv d2"><div class="b-thumb" style="background:linear-gradient(135deg,#E0D4CC,#C4AA9C);">✨</div><div class="b-body"><span class="b-date">Dec 2024 · Career</span><div class="b-title">From Side Projects to Clients: My Freelance Journey</div><p class="b-excerpt">How I turned passion projects into a sustainable freelance practice — and what I'd do differently from day one.</p></div></div>
-      <div class="b-card rv d3"><div class="b-thumb" style="background:linear-gradient(135deg,#E8DCCC,#D4C0A4);">🎬</div><div class="b-body"><span class="b-date">Nov 2024 · Creative</span><div class="b-title">Combining Video &amp; Web Design for Brand Storytelling</div><p class="b-excerpt">When motion and interface design unite, brands come alive. Here's how I approach cross-disciplinary creative work.</p></div></div>
+
+      <div class="b-card rv d1">
+        <div class="b-thumb">
+          <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=700&q=80&auto=format&fit=crop" alt="Neumorphism UI Design">
+          <div class="b-thumb-overlay"></div>
+          <div class="b-icon-badge">🎨</div>
+        </div>
+        <div class="b-body">
+          <span class="b-date">April 2025 · Design</span>
+          <div class="b-title">Neumorphism in 2025: Still Relevant or Niche Trend?</div>
+          <p class="b-excerpt">Exploring where soft UI has evolved, what it does well, and when it's the right choice for your next project.</p>
+        </div>
+      </div>
+
+      <div class="b-card rv d2">
+        <div class="b-thumb">
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80&auto=format&fit=crop" alt="Vanilla JavaScript Development">
+          <div class="b-thumb-overlay"></div>
+          <div class="b-icon-badge">💡</div>
+        </div>
+        <div class="b-body">
+          <span class="b-date">March 2025 · Development</span>
+          <div class="b-title">Why I Still Build Websites Without Frameworks</div>
+          <p class="b-excerpt">A case for pure HTML, CSS, and JavaScript — when vanilla is a strength, not a limitation.</p>
+        </div>
+      </div>
+
+      <div class="b-card rv d3">
+        <div class="b-thumb">
+          <img src="https://images.pexels.com/photos/20716657/pexels-photo-20716657/free-photo-of-whatsapp-logo-on-smartphone.jpeg?auto=compress&cs=tinysrgb&w=700&h=400&fit=crop" alt="WhatsApp Commerce">
+          <div class="b-thumb-overlay"></div>
+          <div class="b-icon-badge">🛒</div>
+        </div>
+        <div class="b-body">
+          <span class="b-date">Feb 2025 · E-Commerce</span>
+          <div class="b-title">WhatsApp Commerce: The Future of Small Brand Sales</div>
+          <p class="b-excerpt">How integrating WhatsApp ordering flows dramatically boosts conversions for fashion boutiques in Southeast Asia.</p>
+        </div>
+      </div>
+
+      <div class="b-card rv d1">
+        <div class="b-thumb">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&q=80&auto=format&fit=crop" alt="Mobile First Design">
+          <div class="b-thumb-overlay"></div>
+          <div class="b-icon-badge">📱</div>
+        </div>
+        <div class="b-body">
+          <span class="b-date">Jan 2025 · Design</span>
+          <div class="b-title">Mobile-First Is Not Optional Anymore</div>
+          <p class="b-excerpt">The non-negotiable case for designing and developing with mobile as the primary canvas — not an afterthought.</p>
+        </div>
+      </div>
+
+      <div class="b-card rv d2">
+        <div class="b-thumb">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&q=80&auto=format&fit=crop" alt="Freelance Journey">
+          <div class="b-thumb-overlay"></div>
+          <div class="b-icon-badge">✨</div>
+        </div>
+        <div class="b-body">
+          <span class="b-date">Dec 2024 · Career</span>
+          <div class="b-title">From Side Projects to Clients: My Freelance Journey</div>
+          <p class="b-excerpt">How I turned passion projects into a sustainable freelance practice — and what I'd do differently from day one.</p>
+        </div>
+      </div>
+
+      <div class="b-card rv d3">
+        <div class="b-thumb">
+          <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=700&q=80&auto=format&fit=crop" alt="Video and Web Design">
+          <div class="b-thumb-overlay"></div>
+          <div class="b-icon-badge">🎬</div>
+        </div>
+        <div class="b-body">
+          <span class="b-date">Nov 2024 · Creative</span>
+          <div class="b-title">Combining Video &amp; Web Design for Brand Storytelling</div>
+          <p class="b-excerpt">When motion and interface design unite, brands come alive. Here's how I approach cross-disciplinary creative work.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -475,11 +733,10 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
       <div class="f-brand-name">Aaro Tayeng</div>
       <p class="f-brand-desc">Frontend Developer &amp; UI/UX Designer creating digital experiences with purpose, precision, and heart. Based in Southeast Asia, working globally.</p>
       <div class="f-socials">
-        <a class="f-soc" href="https://linkedin.com/in/aarotayeng" target="_blank">in</a>
-        <a class="f-soc" href="https://github.com/aarotayeng" target="_blank">GH</a>
-        <a class="f-soc" href="https://instagram.com/aaro.tayeng" target="_blank">IG</a>
-        <a class="f-soc" href="#" target="_blank">Dr</a>
-        <a class="f-soc" href="#" target="_blank">𝕏</a>
+        <a class="f-soc" href="#" title="LinkedIn currently unavailable" onclick="return false;" style="opacity:.5;cursor:default;">in</a>
+        <a class="f-soc" href="https://github.com/aarotayeng" target="_blank" rel="noopener">GH</a>
+        <a class="f-soc" href="https://instagram.com/atdarnel" target="_blank" rel="noopener">IG</a>
+        <a class="f-soc" href="mailto:namey0736@gmail.com">✉</a>
       </div>
     </div>
     <div>
@@ -506,7 +763,7 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
     </div>
     <div>
       <div class="f-col-title">Contact</div>
-      <div class="f-ci"><span class="f-ci-icon">✉</span><span class="f-ci-text">aaro.tayeng@email.com</span></div>
+      <div class="f-ci"><span class="f-ci-icon">✉</span><span class="f-ci-text">namey0736@gmail.com</span></div>
       <div class="f-ci"><span class="f-ci-icon">📍</span><span class="f-ci-text">Southeast Asia<br>Working Globally</span></div>
       <div class="f-ci"><span class="f-ci-icon">🕐</span><span class="f-ci-text">Mon – Sat · 9AM – 7PM ICT</span></div>
     </div>
@@ -518,17 +775,7 @@ footer::before{content:'AT';position:absolute;font-family:'Cinzel',serif;font-we
 </footer>
 
 <script>
-// CURSOR
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-5}px,${my-5}px)`;});
-(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.transform=`translate(${rx-17}px,${ry-17}px)`;requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button,.sk-card,.proj,.t-card,.svc-card,.p-card,.b-card,.stat,.tag,.t-item').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.borderColor='var(--accent)';ring.style.width='44px';ring.style.height='44px';});
-  el.addEventListener('mouseleave',()=>{ring.style.borderColor='var(--accent-sand)';ring.style.width='34px';ring.style.height='34px';});
-});
-
-// PAGE NAV
+// ═══ PAGE NAV ═══
 function go(id,navEl){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.getElementById(id).classList.add('on');
@@ -542,19 +789,19 @@ function goContact(navEl){
   setTimeout(()=>{const el=document.getElementById('contact');if(el)el.scrollIntoView({behavior:'smooth'});},400);
 }
 
-// SCROLL REVEAL
+// ═══ SCROLL REVEAL ═══
 function initRV(){
   const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
   document.querySelectorAll('.rv').forEach(el=>{el.classList.remove('in');io.observe(el);});
 }
 
-// SKILL BARS
+// ═══ SKILL BARS ═══
 function initBars(){
   const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const f=e.target.querySelector('.bar-fill');if(f)f.style.width=f.dataset.w+'%';io.unobserve(e.target);}});},{threshold:.25});
   document.querySelectorAll('.sk-card').forEach(c=>io.observe(c));
 }
 
-// COUNTERS
+// ═══ COUNTERS ═══
 function runCounters(){
   document.querySelectorAll('[data-count]').forEach(el=>{
     const target=+el.dataset.count;let n=0;
@@ -563,16 +810,134 @@ function runCounters(){
   });
 }
 
-// SEND BUTTON
-document.getElementById('send-btn').addEventListener('click',function(){
-  this.textContent='✓ Sent! I\'ll be in touch soon.';
-  this.style.background='var(--accent-warm)';
-  setTimeout(()=>{this.textContent='Send Message →';this.style.background='var(--accent)';},3500);
+// ═══ PROJECT POPUP DATA ═══
+const projects = {
+  roth: {
+    tag: 'E-Commerce · Fashion · Cambodia',
+    title: 'Clothing by Roth — Boutique Store',
+    desc: 'A full multi-page e-commerce experience built for a Cambodian fashion boutique. The site features a curated product gallery with hover effects, a slide-out cart drawer, and a WhatsApp-powered checkout flow that converted visitors into buyers seamlessly. The aesthetic — soft blush tones, elegant typography, and fluid animations — perfectly mirrors the brand\'s feminine and refined identity.',
+    img: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=80&auto=format&fit=crop',
+    link: null
+  },
+  swordrobe: {
+    tag: 'Streetwear · E-Commerce · Mumbai',
+    title: 'Swordrobe',
+    desc: 'A bold, dark streetwear store built for a Mumbai-based brand. The design leans into raw typography, high-contrast layouts, and immersive product cards that reflect the brand\'s edgy identity. WhatsApp ordering integration makes the purchase flow instant and native — no cart abandonment, just direct conversion. Fully responsive from mobile to desktop.',
+    img: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=900&q=80&auto=format&fit=crop',
+    link: 'https://aarotayeng.github.io/swordrobestore/'
+  },
+  f1: {
+    tag: 'Merch · Formula 1 · E-Commerce',
+    title: 'F1 Merchandise Store',
+    desc: 'A racing-inspired merchandise store built to capture the speed and precision of Formula 1. The UI features animated grid-lines, a dynamic product layout, and performance-first code that loads as fast as the cars it celebrates. The color system — deep charcoal, racing red accents — keeps the brand identity tight throughout the shopping experience.',
+    img: 'https://images.pexels.com/photos/33438079/pexels-photo-33438079/free-photo-of-dynamic-formula-1-race-car-on-track.jpeg?auto=compress&cs=tinysrgb&w=900&fit=crop',
+    link: 'https://aarotayeng.github.io/E-commerce-Website/'
+  },
+  nangku: {
+    tag: 'Portfolio · Developer · Personal',
+    title: 'Nangku Tayeng — Dev Portfolio',
+    desc: 'A clean, professional portfolio site built for freelance developer Nangku Tayeng. The site showcases projects with an interactive card grid, features a smooth contact flow, and presents technical skills in an approachable yet impressive format. The design prioritizes clarity and trust — exactly what a developer\'s portfolio needs to win clients.',
+    img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&q=80&auto=format&fit=crop',
+    link: 'https://nangku-tayeng.github.io/portfolio/'
+  },
+  mark: {
+    tag: 'Clothing · E-Commerce · Meerut',
+    title: 'MARK Clothing Store',
+    desc: 'A versatile clothing store UI built for an emerging Indian brand from Meerut. The mobile-first layout features smooth category filtering, a clean product grid, and a WhatsApp-integrated ordering flow. The design balances approachability with style — making the brand feel credible, modern, and ready for growth across all devices.',
+    img: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=900&q=80&auto=format&fit=crop',
+    link: 'https://aarotayeng.github.io/MarkClothingStore/'
+  },
+  brand: {
+    tag: 'Brand Identity · UI Design · Southeast Asia',
+    title: 'Multi-Brand Identity System',
+    desc: 'An end-to-end brand identity project spanning multiple fashion and retail clients across Southeast Asia. The work includes cohesive color systems, typography pairings, icon sets, and digital guidelines — ensuring each brand has a distinct voice while maintaining production consistency. The result is a scalable system that grows with each brand.',
+    img: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=900&q=80&auto=format&fit=crop',
+    link: null
+  }
+};
+
+function openPopup(key){
+  const p = projects[key];
+  if(!p) return;
+  document.getElementById('popup-img').src = p.img;
+  document.getElementById('popup-img').alt = p.title;
+  document.getElementById('popup-tag').textContent = p.tag;
+  document.getElementById('popup-title').textContent = p.title;
+  document.getElementById('popup-desc').textContent = p.desc;
+
+  const linkBtn = document.getElementById('popup-link');
+  if(p.link){
+    linkBtn.href = p.link;
+    linkBtn.style.display = 'inline-block';
+  } else {
+    linkBtn.style.display = 'none';
+  }
+
+  const overlay = document.getElementById('proj-popup');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePopup(){
+  document.getElementById('proj-popup').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('popup-close-btn').addEventListener('click', closePopup);
+document.getElementById('proj-popup').addEventListener('click', function(e){
+  if(e.target === this) closePopup();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closePopup();
 });
 
-// INIT
+// ═══ FORMSPREE AJAX ═══
+document.getElementById('contact-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('send-btn');
+  const msgEl = document.getElementById('form-msg');
+  const form = this;
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  msgEl.style.display = 'none';
+  msgEl.className = 'form-msg';
+
+  try {
+    const data = new FormData(form);
+    const res = await fetch('https://formspree.io/f/mykokarq', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if(res.ok){
+      msgEl.textContent = '✓ Message sent! I\'ll get back to you soon.';
+      msgEl.classList.add('success');
+      msgEl.style.display = 'block';
+      form.reset();
+      btn.textContent = '✓ Sent!';
+      setTimeout(()=>{
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+        msgEl.style.display = 'none';
+      }, 4000);
+    } else {
+      throw new Error('Server error');
+    }
+  } catch(err){
+    msgEl.textContent = '✕ Something went wrong. Please try again or email directly.';
+    msgEl.classList.add('error');
+    msgEl.style.display = 'block';
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
+  }
+});
+
+// ═══ INIT ═══
 document.addEventListener('DOMContentLoaded',()=>{
-  initRV();initBars();
+  initRV();
+  initBars();
   setTimeout(runCounters,1300);
 });
 </script>
